@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,14 +30,16 @@ public class DFEController {
 		return "So long!";
 	}
 
-	public Marsupial getMarsupialByIndex(Integer id) {
+	@GetMapping("/getMarsupial/{id}")
+	public Marsupial getMarsupialByIndex(@PathVariable Integer id) {
 
-		return null;
+		return this.marsupials.get(id);
 	}
 
+	@GetMapping("/getAllMarsupials")
 	public List<Marsupial> getAllMarsupials() {
 
-		return null;
+		return this.marsupials;
 	}
 
 	@PostMapping("/createMarsupial")
@@ -50,11 +53,13 @@ public class DFEController {
 	public Marsupial updateMarsupial(@RequestBody Marsupial marsupial, @PathVariable Integer id) {
 		System.out.println("UPDATED MARSUPIAL: " + marsupial);
 		System.out.println("ID: " + id);
-		return null;
+		return this.marsupials.set(id, marsupial); // replaces the marsupial at that index
 	}
 
-	public String deleteMarsupial(Integer id) {
-
-		return null;
+	@DeleteMapping("/removeMarsupial/{id}")
+	public String deleteMarsupial(@PathVariable Integer id) {
+		Marsupial toDelete = this.marsupials.get(id);
+		this.marsupials.remove(toDelete);
+		return "Deleted: " + toDelete;
 	}
 }
