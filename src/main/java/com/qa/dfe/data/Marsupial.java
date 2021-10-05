@@ -1,6 +1,16 @@
 package com.qa.dfe.data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity // tells Spring that this is a table in the db
 public class Marsupial {
+
+	@Id // PK
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO_INCREMENT
+	private Integer id;
 
 	private String name;
 
@@ -8,15 +18,18 @@ public class Marsupial {
 
 	private String colour;
 
-	public Marsupial(String name, String species, String colour) {
+	public Marsupial() { // REQUIRED
 		super();
-		this.name = name;
-		this.species = species;
-		this.colour = colour;
 	}
 
-	public Marsupial() {
-		super();
+	// REQUIRED
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getName() {

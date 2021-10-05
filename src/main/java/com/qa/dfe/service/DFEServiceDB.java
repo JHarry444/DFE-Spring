@@ -2,41 +2,54 @@ package com.qa.dfe.service;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.qa.dfe.data.Marsupial;
+import com.qa.dfe.repo.MarsupialRepo;
 
 @Service
+@Primary
 public class DFEServiceDB implements DFEService {
+
+	private MarsupialRepo repo;
+
+	public DFEServiceDB(MarsupialRepo repo) {
+		super();
+		this.repo = repo;
+	}
 
 	@Override
 	public Marsupial getMarsupialByIndex(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repo.findById(id).get();
 	}
 
 	@Override
 	public List<Marsupial> getAllMarsupials() {
-		// TODO Auto-generated method stub
-		return null;
+		// SELECT * FROM marsupial;
+		return this.repo.findAll();
 	}
 
 	@Override
 	public Marsupial createMarsupial(Marsupial marsupial) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.repo.save(marsupial);
 	}
 
 	@Override
 	public Marsupial updateMarsupial(Marsupial marsupial, Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		// NEVER TRY AND CHANGE THE ID
+		Marsupial toUpdate = this.repo.findById(id).get();
+
+		toUpdate.setColour(marsupial.getColour());
+		toUpdate.setName(marsupial.getName());
+		toUpdate.setSpecies(marsupial.getSpecies());
+
+		return this.repo.save(toUpdate);
 	}
 
 	@Override
 	public void deleteMarsupial(Integer id) {
-		// TODO Auto-generated method stub
-
+		this.repo.deleteById(id);
 	}
 
 }
