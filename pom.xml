@@ -50,11 +50,11 @@
 		</dependency>
 
 		<!-- Generates API docs -->
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.4.8</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<build>

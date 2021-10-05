@@ -1,4 +1,4 @@
-package com.qa.dfe;
+package com.qa.dfe.data;
 
 public class Marsupial {
 
