@@ -18,6 +18,14 @@ public class Marsupial {
 
 	private String colour;
 
+	public Marsupial(Integer id, String name, String species, String colour) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.species = species;
+		this.colour = colour;
+	}
+
 	public Marsupial() { // REQUIRED
 		super();
 	}
