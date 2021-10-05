@@ -54,16 +54,28 @@ public class DFEController {
 	}
 
 	@PutMapping("/updateMarsupial/{id}") // 202 - Accepted
-	public Marsupial updateMarsupial(@RequestBody Marsupial marsupial, @PathVariable Integer id) {
+	public ResponseEntity<Marsupial> updateMarsupial(@RequestBody Marsupial marsupial, @PathVariable Integer id) {
 		System.out.println("UPDATED MARSUPIAL: " + marsupial);
 		System.out.println("ID: " + id);
-		return this.marsupials.set(id, marsupial); // replaces the marsupial at that index
+		Marsupial responseBody = this.marsupials.set(id, marsupial); // replaces the marsupial at that index
+		return new ResponseEntity<Marsupial>(responseBody, HttpStatus.ACCEPTED);
 	}
 
 	@DeleteMapping("/removeMarsupial/{id}") // 204 - No content
-	public String deleteMarsupial(@PathVariable Integer id) {
+	public ResponseEntity<?> deleteMarsupial(@PathVariable Integer id) {
 		Marsupial toDelete = this.marsupials.get(id);
 		this.marsupials.remove(toDelete);
-		return "Deleted: " + toDelete;
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 causes the body to be ignored
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
