@@ -1,6 +1,6 @@
 package com.qa.dfe.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
@@ -34,7 +34,7 @@ public class DFEServiceUnitTest {
 		Mockito.when(this.repo.findById(id)).thenReturn(optionalMarsupial);
 		Mockito.when(this.repo.save(newMarsupial)).thenReturn(newMarsupial);
 
-		assertEquals(newMarsupial, this.service.updateMarsupial(newMarsupial, marsupial.getId()));
+		assertThat(newMarsupial).isEqualTo(this.service.updateMarsupial(newMarsupial, marsupial.getId()));
 
 		Mockito.verify(this.repo, Mockito.times(1)).findById(id);
 		Mockito.verify(this.repo, Mockito.times(1)).save(newMarsupial);
