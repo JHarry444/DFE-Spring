@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.qa.dfe.data.Marsupial;
 import com.qa.dfe.service.DFEService;
 
+@CrossOrigin
 @RestController // enables http endpoints AND tells Spring to make a Bean of this class
 public class DFEController {
 
@@ -35,6 +37,11 @@ public class DFEController {
 	@GetMapping("/goodbye")
 	public String bye() {
 		return "So long!";
+	}
+
+	@GetMapping("/getMarsupialByName/{name}") // 200
+	public List<Marsupial> getMarsupialByName(@PathVariable String name) {
+		return this.service.getMarsupialByName(name);
 	}
 
 	@GetMapping("/getMarsupial/{id}") // 200

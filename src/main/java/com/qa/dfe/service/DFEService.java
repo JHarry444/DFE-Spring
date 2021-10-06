@@ -6,6 +6,8 @@ import com.qa.dfe.data.Marsupial;
 
 public interface DFEService {
 
+	public List<Marsupial> getMarsupialByName(String name);
+
 	public Marsupial getMarsupialByIndex(Integer id);
 
 	public List<Marsupial> getAllMarsupials();

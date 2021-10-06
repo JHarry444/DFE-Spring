@@ -20,6 +20,11 @@ public class DFEServiceDB implements DFEService {
 	}
 
 	@Override
+	public List<Marsupial> getMarsupialByName(String name) {
+		return this.repo.findByName(name);
+	}
+
+	@Override
 	public Marsupial getMarsupialByIndex(Integer id) {
 		return this.repo.findById(id).get();
 	}
