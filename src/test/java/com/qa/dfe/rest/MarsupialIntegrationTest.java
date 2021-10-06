@@ -1,9 +1,13 @@
 package com.qa.dfe.rest;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +55,19 @@ public class MarsupialIntegrationTest {
 	}
 
 	@Test
+	void testGetAll() throws Exception {
+		String savedMarsupialAsJSON = this.mapper
+				.writeValueAsString(List.of(new Marsupial(1, "Wally", "Wallabee", "grey")));
+
+		RequestBuilder request = get("/getAllMarsupials");
+
+		ResultMatcher checkStatus = status().isOk();
+		ResultMatcher checkContent = content().json(savedMarsupialAsJSON);
+
+		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkContent);
+	}
+
+	@Test
 	void testGetById() throws Exception {
 		final Marsupial savedMarsupial = new Marsupial(1, "Wally", "Wallabee", "grey");
 		String savedMarsupialAsJSON = this.mapper.writeValueAsString(savedMarsupial);
@@ -61,6 +78,25 @@ public class MarsupialIntegrationTest {
 		ResultMatcher checkContent = content().json(savedMarsupialAsJSON);
 
 		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkContent);
+	}
+
+	@Test
+	void testUpdate() throws Exception {
+		final Marsupial testMarsupial = new Marsupial(1, "barry", "koala", "blue");
+		final String testMarsupialAsJSON = this.mapper.writeValueAsString(testMarsupial);
+
+		RequestBuilder request = put("/updateMarsupial/1").contentType(MediaType.APPLICATION_JSON)
+				.content(testMarsupialAsJSON);
+
+		ResultMatcher checkStatus = status().isAccepted();
+		ResultMatcher checkContent = content().json(testMarsupialAsJSON);
+
+		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkContent);
+	}
+
+	@Test
+	void testDelete() throws Exception {
+		this.mvc.perform(delete("/removeMarsupial/1")).andExpect(status().isNoContent());
 	}
 
 	void testCreateAbrdiged() throws Exception {
