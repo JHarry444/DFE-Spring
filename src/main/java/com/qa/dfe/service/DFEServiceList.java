@@ -2,6 +2,7 @@ package com.qa.dfe.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,12 @@ import com.qa.dfe.data.Marsupial;
 public class DFEServiceList implements DFEService {
 
 	private List<Marsupial> marsupials = new ArrayList<>();
+
+	@Override
+	public List<Marsupial> getMarsupialByName(String name) {
+		return this.marsupials.stream().filter(marsupial -> name.equalsIgnoreCase(marsupial.getName()))
+				.collect(Collectors.toList());
+	}
 
 	@Override
 	public Marsupial getMarsupialByIndex(Integer id) {
