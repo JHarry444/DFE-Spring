@@ -34,7 +34,7 @@ public class DFEServiceUnitTest {
 		Mockito.when(this.repo.findById(id)).thenReturn(optionalMarsupial);
 		Mockito.when(this.repo.save(newMarsupial)).thenReturn(newMarsupial);
 
-		assertThat(newMarsupial).isEqualTo(this.service.updateMarsupial(newMarsupial, marsupial.getId()));
+		assertThat(this.service.updateMarsupial(newMarsupial, marsupial.getId())).isEqualTo(newMarsupial);
 
 		Mockito.verify(this.repo, Mockito.times(1)).findById(id);
 		Mockito.verify(this.repo, Mockito.times(1)).save(newMarsupial);
