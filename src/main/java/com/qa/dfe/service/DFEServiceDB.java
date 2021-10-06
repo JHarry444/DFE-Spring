@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.qa.dfe.data.Marsupial;
 import com.qa.dfe.repo.MarsupialRepo;
 
-@Service
 @Primary
+@Service
 public class DFEServiceDB implements DFEService {
 
 	private MarsupialRepo repo;
