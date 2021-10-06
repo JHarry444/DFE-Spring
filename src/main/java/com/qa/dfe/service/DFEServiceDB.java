@@ -1,6 +1,7 @@
 package com.qa.dfe.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -43,13 +44,14 @@ public class DFEServiceDB implements DFEService {
 	@Override
 	public Marsupial updateMarsupial(Marsupial marsupial, Integer id) {
 		// NEVER TRY AND CHANGE THE ID
-		Marsupial toUpdate = this.repo.findById(id).get();
+		Optional<Marsupial> optionalMarsupial = this.repo.findById(id); // mocked
+		Marsupial toUpdate = optionalMarsupial.get(); // not mocked
 
 		toUpdate.setColour(marsupial.getColour());
 		toUpdate.setName(marsupial.getName());
 		toUpdate.setSpecies(marsupial.getSpecies());
 
-		return this.repo.save(toUpdate);
+		return this.repo.save(toUpdate); // mocked
 	}
 
 	@Override

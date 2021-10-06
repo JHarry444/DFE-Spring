@@ -1,5 +1,6 @@
 package com.qa.dfe.rest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -18,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.ResultMatcher;
 
@@ -52,6 +54,15 @@ public class MarsupialIntegrationTest {
 		ResultMatcher checkContent = content().json(savedMarsupialAsJSON);
 
 		this.mvc.perform(request).andExpect(checkStatus).andExpect(checkContent);
+
+		// DEMO PURPOSES ONLY
+		MvcResult result = this.mvc.perform(request).andExpect(checkStatus).andReturn();
+
+		String responseJSON = result.getResponse().getContentAsString();
+
+		Marsupial created = this.mapper.readValue(responseJSON, Marsupial.class);
+
+		assertEquals(savedMarsupial, created);
 	}
 
 	@Test
