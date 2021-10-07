@@ -3,10 +3,12 @@ package com.qa.dfe.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.qa.dfe.data.Marsupial;
+import com.qa.dfe.dto.MarsupialWithLocationDTO;
 import com.qa.dfe.exception.MarsupialNotFoundException;
 import com.qa.dfe.repo.MarsupialRepo;
 
@@ -16,9 +18,12 @@ public class DFEServiceDB implements DFEService {
 
 	private MarsupialRepo repo;
 
-	public DFEServiceDB(MarsupialRepo repo) {
+	private ModelMapper mapper;
+
+	public DFEServiceDB(MarsupialRepo repo, ModelMapper mapper) {
 		super();
 		this.repo = repo;
+		this.mapper = mapper;
 	}
 
 	@Override
@@ -26,9 +31,22 @@ public class DFEServiceDB implements DFEService {
 		return this.repo.findByName(name);
 	}
 
+	private MarsupialWithLocationDTO mapToDTO(Marsupial marsupial) {
+		MarsupialWithLocationDTO dto = new MarsupialWithLocationDTO();
+
+		dto.setColour(marsupial.getColour());
+		dto.setId(marsupial.getId());
+		dto.setLocation(marsupial.getHabitat().getLocation());
+		dto.setName(marsupial.getName());
+		dto.setSpecies(marsupial.getSpecies());
+
+		return dto;
+	}
+
 	@Override
-	public Marsupial getMarsupialByIndex(Integer id) {
-		return this.repo.findById(id).orElseThrow(MarsupialNotFoundException::new);
+	public MarsupialWithLocationDTO getMarsupialByIndex(Integer id) {
+		Marsupial found = this.repo.findById(id).orElseThrow(MarsupialNotFoundException::new);
+		return this.mapToDTO(found);
 	}
 
 	@Override

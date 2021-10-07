@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qa.dfe.data.Marsupial;
+import com.qa.dfe.dto.MarsupialWithLocationDTO;
 import com.qa.dfe.service.DFEService;
 
 @CrossOrigin
@@ -45,7 +46,7 @@ public class DFEController {
 	}
 
 	@GetMapping("/getMarsupial/{id}") // 200
-	public Marsupial getMarsupialByIndex(@PathVariable Integer id) {
+	public MarsupialWithLocationDTO getMarsupialByIndex(@PathVariable Integer id) {
 
 		return this.service.getMarsupialByIndex(id);
 	}

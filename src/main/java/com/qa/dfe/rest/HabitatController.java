@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qa.dfe.data.Habitat;
+import com.qa.dfe.dto.HabitatDTO;
 import com.qa.dfe.service.HabitatService;
 
 @CrossOrigin
@@ -28,7 +29,7 @@ public class HabitatController {
 	}
 
 	@GetMapping("/getHabitat/{id}") // 200
-	public Habitat getHabitatByIndex(@PathVariable Integer id) {
+	public HabitatDTO getHabitatByIndex(@PathVariable Integer id) {
 
 		return this.service.getHabitatByIndex(id);
 	}

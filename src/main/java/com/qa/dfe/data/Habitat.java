@@ -1,9 +1,14 @@
 package com.qa.dfe.data;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Habitat {
@@ -13,6 +18,10 @@ public class Habitat {
 	private Integer id;
 
 	private String location;
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "habitat") // specify the variable name of the FK
+	private List<Marsupial> marsupials;
 
 	public Integer getId() {
 		return id;
@@ -28,6 +37,14 @@ public class Habitat {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public List<Marsupial> getMarsupials() {
+		return marsupials;
+	}
+
+	public void setMarsupials(List<Marsupial> marsupials) {
+		this.marsupials = marsupials;
 	}
 
 }

@@ -3,9 +3,11 @@ package com.qa.dfe.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.qa.dfe.data.Habitat;
+import com.qa.dfe.dto.HabitatDTO;
 import com.qa.dfe.exception.HabitatNotFoundException;
 import com.qa.dfe.repo.HabitatRepo;
 
@@ -14,13 +16,41 @@ public class HabitatService {
 
 	private HabitatRepo repo;
 
-	public HabitatService(HabitatRepo repo) {
+	private ModelMapper mapper;
+
+	public HabitatService(HabitatRepo repo, ModelMapper mapper) {
 		super();
 		this.repo = repo;
+		this.mapper = mapper;
 	}
 
-	public Habitat getHabitatByIndex(Integer id) {
-		return this.repo.findById(id).orElseThrow(HabitatNotFoundException::new);
+//	private HabitatDTO mapToDTO(Habitat habitat) {
+//		HabitatDTO dto = new HabitatDTO();
+//		dto.setId(habitat.getId());
+//		dto.setLocation(habitat.getLocation());
+//		List<MarsupialDTO> mDTOs = new ArrayList<>();
+//
+//		for (Marsupial m : habitat.getMarsupials()) {
+//			MarsupialDTO mDTO = new MarsupialDTO();
+//			mDTO.setId(m.getId());
+//			mDTO.setColour(m.getColour());
+//			mDTO.setName(m.getName());
+//			mDTO.setSpecies(m.getSpecies());
+//			mDTOs.add(mDTO);
+//		}
+//
+//		dto.setMarsupials(mDTOs);
+//		return dto;
+//	}
+
+	private HabitatDTO mapToDTO(Habitat habitat) {
+		return this.mapper.map(habitat, HabitatDTO.class);
+	}
+
+	public HabitatDTO getHabitatByIndex(Integer id) {
+		Habitat saved = this.repo.findById(id).orElseThrow(HabitatNotFoundException::new);
+
+		return this.mapToDTO(saved);
 	}
 
 	public List<Habitat> getAllHabitats() {
