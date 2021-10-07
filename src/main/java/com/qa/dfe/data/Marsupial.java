@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity // tells Spring that this is a table in the db
 public class Marsupial {
@@ -17,6 +18,9 @@ public class Marsupial {
 	private String species;
 
 	private String colour;
+
+	@ManyToOne
+	private Habitat habitat;
 
 	public Marsupial(Integer id, String name, String species, String colour) {
 		super();
@@ -64,52 +68,12 @@ public class Marsupial {
 		this.colour = colour;
 	}
 
-	@Override
-	public String toString() {
-		return "Marsupial [name=" + name + ", species=" + species + ", colour=" + colour + "]";
+	public Habitat getHabitat() {
+		return habitat;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((colour == null) ? 0 : colour.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((species == null) ? 0 : species.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Marsupial other = (Marsupial) obj;
-		if (colour == null) {
-			if (other.colour != null)
-				return false;
-		} else if (!colour.equals(other.colour))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (species == null) {
-			if (other.species != null)
-				return false;
-		} else if (!species.equals(other.species))
-			return false;
-		return true;
+	public void setHabitat(Habitat habitat) {
+		this.habitat = habitat;
 	}
 
 }
