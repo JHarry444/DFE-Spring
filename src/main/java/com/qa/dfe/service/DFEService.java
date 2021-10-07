@@ -16,5 +16,5 @@ public interface DFEService {
 
 	public Marsupial updateMarsupial(Marsupial marsupial, Integer id);
 
-	public void deleteMarsupial(Integer id);
+	public boolean deleteMarsupial(Integer id);
 }

@@ -71,7 +71,11 @@ public class DFEController {
 
 	@DeleteMapping("/removeMarsupial/{id}") // 204 - No content
 	public ResponseEntity<?> deleteMarsupial(@PathVariable Integer id) {
-		this.service.deleteMarsupial(id);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 causes the body to be ignored
+		boolean deleted = this.service.deleteMarsupial(id);
+		if (deleted) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT); // 204 causes the body to be ignored
+		} else {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

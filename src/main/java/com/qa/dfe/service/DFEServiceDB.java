@@ -55,8 +55,10 @@ public class DFEServiceDB implements DFEService {
 	}
 
 	@Override
-	public void deleteMarsupial(Integer id) {
+	public boolean deleteMarsupial(Integer id) {
 		this.repo.deleteById(id);
+		boolean exists = this.repo.existsById(id);
+		return !exists;
 	}
 
 }

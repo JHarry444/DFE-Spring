@@ -47,9 +47,9 @@ public class DFEServiceList implements DFEService {
 	}
 
 	@Override
-	public void deleteMarsupial(Integer id) {
+	public boolean deleteMarsupial(Integer id) {
 		Marsupial toDelete = this.marsupials.get(id);
-		this.marsupials.remove(toDelete);
+		return this.marsupials.remove(toDelete);
 	}
 
 }
