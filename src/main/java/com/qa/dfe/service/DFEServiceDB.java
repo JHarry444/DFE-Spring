@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.qa.dfe.data.Marsupial;
+import com.qa.dfe.exception.MarsupialNotFoundException;
 import com.qa.dfe.repo.MarsupialRepo;
 
 @Primary
@@ -27,7 +28,7 @@ public class DFEServiceDB implements DFEService {
 
 	@Override
 	public Marsupial getMarsupialByIndex(Integer id) {
-		return this.repo.findById(id).get();
+		return this.repo.findById(id).orElseThrow(MarsupialNotFoundException::new);
 	}
 
 	@Override
